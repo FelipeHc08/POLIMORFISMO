@@ -1,0 +1,324 @@
+//EXERCÍCIO 1
+
+public class Main {
+    
+    public static void main(String[] args) {
+        DVD dvd = new DVD();
+        dvd.inserirDadosDVD(1, 29.99, "Os Vingadores", 12);
+        dvd.printDados();
+
+        dvd.alterarDadosDVD(39.99, 15);
+        dvd.printDados();
+
+        CD cd = new CD();
+        cd.inserirDadosCD(2, 19.99, "Nevermind - Nirvana", 10);
+        cd.printDados();
+
+        cd.alterarDadosCD(24.99, 12);
+        cd.printDados();
+
+    }
+}
+
+public class Midia {
+    private int codigo;
+    private double preco;
+    private String nome;
+
+    public Midia() {
+    }
+
+    public Midia(int codigo, double preco, String nome) {
+        this.codigo = codigo;
+        this.preco = preco;
+        this.nome = nome;
+    }
+
+    public String getTipo() {
+        return "Midia";
+    }
+
+    public String getDetalhes() {
+        return "Código: " + codigo + "\nPreço: R$" + preco + "\nNome: " + nome;
+    }
+
+    public void printDados() {
+        System.out.println(getTipo() + ":");
+        System.out.println(getDetalhes());
+    }
+
+    public void inserirDados() {
+        // Lógica para inserir os dados da Midia
+    }
+
+    // Getters e Setters
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+}
+public class DVD extends Midia {
+    private int numFaixas;
+
+    public DVD() {
+    }
+
+    public DVD(int codigo, double preco, String nome, int numFaixas) {
+        super(codigo, preco, nome);
+        this.numFaixas = numFaixas;
+    }
+
+    @Override
+    public String getTipo() {
+        return "DVD";
+    }
+
+    @Override
+    public String getDetalhes() {
+        return super.getDetalhes() + "\nNúmero de Faixas: " + numFaixas;
+    }
+
+    public void setFaixas(int numFaixas) {
+        this.numFaixas = numFaixas;
+    }
+
+    public void inserirDadosDVD(int codigo, double preco, String nome, int numFaixas) {
+        setCodigo(codigo);
+        setPreco(preco);
+        setNome(nome);
+        setFaixas(numFaixas);
+    }
+
+    public void alterarDadosDVD(double novoPreco, int novaQuantidade) {
+        setPreco(novoPreco);
+        setFaixas(novaQuantidade);
+    }
+}
+public class CD extends Midia {
+    private int numMusicas;
+
+    public CD() {
+    }
+
+    public CD(int codigo, double preco, String nome, int numMusicas) {
+        super(codigo, preco, nome);
+        this.numMusicas = numMusicas;
+    }
+
+    @Override
+    public String getTipo() {
+        return "CD";
+    }
+
+    @Override
+    public String getDetalhes() {
+        return super.getDetalhes() + "\nNúmero de Músicas: " + numMusicas;
+    }
+
+    public void setMusicas(int numMusicas) {
+        this.numMusicas = numMusicas;
+    }
+
+    public void inserirDadosCD(int codigo, double preco, String nome, int numMusicas) {
+        setCodigo(codigo);
+        setPreco(preco);
+        setNome(nome);
+        setMusicas(numMusicas);
+    }
+
+    public void alterarDadosCD(double novoPreco, int novaQuantidade) {
+        setPreco(novoPreco);
+        setMusicas(novaQuantidade);
+
+=======================================================================================================================================================================
+
+//EXERCÍCIO 2
+
+
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        try (Scanner sc = new Scanner(System.in)) {
+            double totalPrecoVeiculos = 0.0;
+            
+            Moto moto = new Moto();
+            Carro carro = new Carro();
+            
+            System.out.println("Selecione carro ou moto: ");
+            String resposta = sc.nextLine();
+            if (resposta.equalsIgnoreCase("moto")) {
+                moto.insertData();
+                if (moto.getAno() >= 2008) {
+                    double novoPreco = moto.getPreco() + (moto.getPreco() * 10.0 / 100.0);
+                    moto.setPreco(novoPreco);
+                    System.out.println("Informe o novo preco da moto");
+                }
+                totalPrecoVeiculos += moto.getPreco();
+                moto.printDados();
+            } else if (resposta.equalsIgnoreCase("carro")) {
+                carro.insertData();
+                if (carro.getKm() > 100000) {
+                    double novoPreco = carro.getPreco() - (carro.getPreco() * 8.0 / 100.0);
+                    carro.setPreco(novoPreco);
+                    System.out.println("Informe o novo preco do carro");
+                }
+                totalPrecoVeiculos += carro.getPreco();
+                carro.printDados();
+            }
+        }
+    }
+
+}
+import java.util.Scanner;
+
+public class Moto extends Veiculo {
+
+    private int ano;
+
+    public Moto() {
+
+    }
+
+    public Moto(String n, double p, int a) {
+        super(n, p);
+        this.ano = a;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public void insertData() {
+        Scanner sc = new Scanner(System.in);
+        super.insertDados();
+        System.out.println("Informe o ano da moto?");
+        setAno(sc.nextInt());
+        sc.nextLine();
+        sc.close();
+    }
+
+    @Override
+    public void printDados() {
+        super.printDados();
+
+    }
+}
+
+import java.util.Scanner;
+
+public class Veiculo {
+
+    private String modelo;
+    private double preco;
+
+    public Veiculo () {
+        
+    }
+    
+    public Veiculo(String m, double p) {
+        this.modelo = m;
+        this.preco = p;
+    }
+
+    public void insertDados() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- Cadastro de carro ---");
+        System.out.println("Qual o modelo do seu veiculo? ");
+        setModelo(sc.nextLine());
+        System.out.println("Qual o preco do seu veiculo? ");
+        setPreco(sc.nextDouble());
+    }
+    
+    public void printDados() {
+        System.out.println("Modelo: " + getModelo());
+        System.out.println("Preco: " + getPreco());
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+}
+
+import java.util.Scanner;
+
+public class Carro extends Veiculo {
+
+    private double km;
+
+    public Carro() {
+        
+    }
+    
+    public Carro(String n, double p, double k) {
+        super(n, p);
+        this.km = k;
+    }
+
+    public double getKm() {
+        return km;
+    }
+
+    public void setKm(double k) {
+        this.km = k;
+    }
+
+    public void insertData() {
+        Scanner sc = new Scanner(System.in);
+        super.insertDados();
+        System.out.println("Qual a quilometragem do seu carro?");
+        setKm(sc.nextDouble());
+        sc.nextLine();
+        sc.close();
+    }
+
+    @Override
+    public void printDados() {
+        super.printDados();
+
+    }
+}
+    }
+}
+
+
+
